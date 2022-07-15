@@ -32,9 +32,11 @@ watch -n 1 kubectl get all -o wide -n k8sdemo
 # login wordpress
 
 - Helm showed you the commands you need to get the admin credentials for our WordPress site. Let's grab those commands and execute them to log on to the site as follows:
+```
 helm status wp
 echo Username: user
 kubectl get secret --namespace k8sdemo wp-wordpress -o jsonpath="{.data.wordpress-password}" | base64 -d
+```
 
 http://20.121.146.230/admin
 
