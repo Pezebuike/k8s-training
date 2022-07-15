@@ -67,7 +67,7 @@ az login
 ## Step 2.1 - Install the required dependencies:
 
 ```
-yum install yum-utils device-mapper-persistent-data lvm2  bash-completion bash-completion-extras -y
+yum install yum-utils device-mapper-persistent-data lvm2  bash-completion bash-completion-extras yum-utils-y
 ```
 
 ```
@@ -84,7 +84,8 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 ## Step 2.3 - Now that we have Docker repository enabled, we can install the latest version of Docker CE (Community Edition) using yum by typing:
 
 ```
-yum install docker-ce -y
+yum install docker-ce --allowerasing -y
+
 
 ```
 
@@ -94,13 +95,13 @@ yum install docker-ce -y
 - Run the below command to download the current stable release of Docker compose.
 
 ```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose
 ```
 
 - Apply the executable permission for the binary file which we have downloaded.
 
 ```
-chmod +x /usr/local/bin/docker-compose
+chmod +x /usr/bin/docker-compose
 ```
 
 - If the docker compose is installed on a different location For example: /usr/local/bin/ , You can copy the executable to /usr/bin directory.
@@ -185,14 +186,14 @@ az group create --name myResourceGroup --location eastus
 
 
 ```
-az acr create --resource-group myResourceGroup --name cnlacr --sku Basic
+az acr create --resource-group myResourceGroup --name cnlacr1 --sku Basic
 ```
 
 - Login to the Azure Container registry
 
 
 ```
-az acr login --name cnlacr
+az acr login --name cnlacr1
 ```
 
 - List the Docker Images
@@ -213,7 +214,7 @@ az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginSe
 
 
 ```
-cnlacr.azurecr.io
+cnlacr1.azurecr.io
 ```
 
 
@@ -221,7 +222,7 @@ cnlacr.azurecr.io
 
 
 ```
-docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr.azurecr.io/azure-vote-front:v1
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 - List the docker images
 
@@ -233,13 +234,13 @@ docker images
 - Push your prepared custom image to your newly created ACR.
 
 ```
-docker push cnlacr.azurecr.io/azure-vote-front:v1
+docker push cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 
 - list the ACR repository revisions
 
 ```
-az acr repository list --name cnlacr --output table
+az acr repository list --name cnlacr1 --output table
 ```
 - List your repository in ACR.
 
@@ -326,7 +327,7 @@ vi azure-vote-all-in-one-redis.yaml
 ```
 containers:
 - name: azure-vote-front
-  image: cnlacr.azurecr.io/azure-vote-front:v1
+  image: cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 - Apply the changes into AKS k8s cluster.
 
@@ -434,13 +435,13 @@ docker-compose up --build -d
 
 
 ```
-docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr.azurecr.io/azure-vote-front:v2
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Push your prepared custom image to your newly created ACR.
 
 ```
-docker push cnlacr.azurecr.io/azure-vote-front:v2
+docker push cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Scale your pods to 3 replicas
@@ -450,7 +451,7 @@ kubectl scale --replicas=3 deployment/azure-vote-front
 ```
 - Set and prepare your deployment to new version 2
 ```
-kubectl set image deployment azure-vote-front azure-vote-front=cnlacr.azurecr.io/azure-vote-front:v2
+kubectl set image deployment azure-vote-front azure-vote-front=cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Run below command
@@ -519,6 +520,12 @@ done
 ```
 
 - This section explains that every pod for the redis-replica deployment requires 200m of a CPU core (200 milli or 20%) and 100MiB (Mebibyte) of memory. In your 2 CPU clusters (with node 1 shut down), scaling this to 10 pods will cause issues with the available resources. Let's look into this:
+	
+- To clarify what's described here in the Kubernetes context, 1 CPU is the same as a core (Also more information here).
+
+- 1000m (milicores) = 1 core = 1 vCPU = 1 AWS vCPU = 1 GCP Core.
+- 100m (milicores) = 0.1 core = 0.1 vCPU = 0.1 AWS vCPU = 0.1 GCP Core.
+- For example, an Intel Core i7-6700 has four cores, but it has Hyperthreading which doubles what the system sees in terms of cores. So in essence, it will show up in Kubernetes as: **8000m = 8 cores = 8 vCPUs**
 
 ## Step 13.4: Let's start by scaling the redis-replica deployment to 10 pods:
 
