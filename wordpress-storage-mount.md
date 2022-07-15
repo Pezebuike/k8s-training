@@ -74,6 +74,7 @@ kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_
 
 ****************************************************************************************************************************************
 # multi storage
+```
 kubectl create ns facebook
 kubectl apply -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/4-multistorage.yml
 
@@ -89,6 +90,7 @@ ls -ltrh /var/www/html/
 ls -ltrh /var/lib/postgres
 
 kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/4-multistorage.yml
+```
 
 ***************************************************************************************************************************************
 kubectl apply -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/5-full.yaml
