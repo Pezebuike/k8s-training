@@ -520,6 +520,12 @@ done
 ```
 
 - This section explains that every pod for the redis-replica deployment requires 200m of a CPU core (200 milli or 20%) and 100MiB (Mebibyte) of memory. In your 2 CPU clusters (with node 1 shut down), scaling this to 10 pods will cause issues with the available resources. Let's look into this:
+	
+- To clarify what's described here in the Kubernetes context, 1 CPU is the same as a core (Also more information here).
+
+- 1000m (milicores) = 1 core = 1 vCPU = 1 AWS vCPU = 1 GCP Core.
+- 100m (milicores) = 0.1 core = 0.1 vCPU = 0.1 AWS vCPU = 0.1 GCP Core.
+- For example, an Intel Core i7-6700 has four cores, but it has Hyperthreading which doubles what the system sees in terms of cores. So in essence, it will show up in Kubernetes as: **8000m = 8 cores = 8 vCPUs**
 
 ## Step 13.4: Let's start by scaling the redis-replica deployment to 10 pods:
 
