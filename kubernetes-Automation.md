@@ -22,6 +22,8 @@
 - Step 10: Autoscale pods
 - Step 11: Manually scale AKS nodes (worker nodes)
 - Step 12: Update an application in Azure Kubernetes Service (AKS)
+- Step 13: now deploy sample application in kubernetes cluster in new namespace
+
 
 #
 
@@ -460,10 +462,7 @@ kubectl get service azure-vote-front
 
 - you will see Fail & TryFailWin
 
-# Step 12: Update an application in Azure Kubernetes Service (AKS)
-
-
-# now deploy sample application in kubernetes cluster in new namespace
+# Step 13: now deploy sample application in kubernetes cluster in new namespace
 
 ```
 kubectl create ns k8sdemo
@@ -472,7 +471,7 @@ kubectl apply -f https://raw.githubusercontent.com/bvijaycom/meetup/main/guestbo
 
 ```
 
-## open putty in the 2nd window and run the below command
+## Step 13.1: open putty in the 2nd window and run the below command
 
 ```
 watch -n 1 kubectl get all -n k8sdemo -o wide
@@ -480,7 +479,7 @@ watch -n 1 kubectl get all -n k8sdemo -o wide
 
 ```
 
-## now open new putty window and execute the below load script [replace the external ip with what you get from above command output]
+## Step 13.2: now open new putty window and execute the below load script [replace the external ip with what you get from above command output]
 
 
 ```
@@ -504,7 +503,7 @@ done
 - A new Redis master pod got created, on host 0. This went through the stages **Pending, ContainerCreating, and then Running**.
 
 
-# Solving out-of-resource failure
+## Step 13.3: Solving out-of-resource failure
 
 - Kubernetes uses requests to calculate how much CPU power or memory a certain pod requires. The guestbook application has requests defined for all the deployments. If you open the guestbook-all-in-one.yaml file in the folder. you'll see the following for the redis-replica deployment:
 
@@ -522,15 +521,15 @@ done
 
 - This section explains that every pod for the redis-replica deployment requires 200m of a CPU core (200 milli or 20%) and 100MiB (Mebibyte) of memory. In your 2 CPU clusters (with node 1 shut down), scaling this to 10 pods will cause issues with the available resources. Let's look into this:
 
-# Let's start by scaling the redis-replica deployment to 10 pods:
+## Step 13.4: Let's start by scaling the redis-replica deployment to 10 pods:
 
 - kubectl scale deployment/redis-replica --replicas=10 -n k8sdemo
 
 
-# This will cause a couple of new pods to be created. We can check our pods  using the following:
+## Step 13.5: This will cause a couple of new pods to be created. We can check our pods  using the following:
 - now many are shown in pending state.This occurs if the cluster is out of resources.
 
-# We can get more information about these pending pods using the following command:
+## Step 13.6: We can get more information about these pending pods using the following command:
  
 ```
 kubectl describe pod redis-replica-5bc7bcc9c4-svcc8 -n k8sdemo
