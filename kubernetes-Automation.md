@@ -186,14 +186,14 @@ az group create --name myResourceGroup --location eastus
 
 
 ```
-az acr create --resource-group myResourceGroup --name cnlacr --sku Basic
+az acr create --resource-group myResourceGroup --name cnlacr1 --sku Basic
 ```
 
 - Login to the Azure Container registry
 
 
 ```
-az acr login --name cnlacr
+az acr login --name cnlacr1
 ```
 
 - List the Docker Images
@@ -214,7 +214,7 @@ az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginSe
 
 
 ```
-cnlacr.azurecr.io
+cnlacr1.azurecr.io
 ```
 
 
@@ -222,7 +222,7 @@ cnlacr.azurecr.io
 
 
 ```
-docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr.azurecr.io/azure-vote-front:v1
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 - List the docker images
 
@@ -234,13 +234,13 @@ docker images
 - Push your prepared custom image to your newly created ACR.
 
 ```
-docker push cnlacr.azurecr.io/azure-vote-front:v1
+docker push cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 
 - list the ACR repository revisions
 
 ```
-az acr repository list --name cnlacr --output table
+az acr repository list --name cnlacr1 --output table
 ```
 - List your repository in ACR.
 
@@ -327,7 +327,7 @@ vi azure-vote-all-in-one-redis.yaml
 ```
 containers:
 - name: azure-vote-front
-  image: cnlacr.azurecr.io/azure-vote-front:v1
+  image: cnlacr1.azurecr.io/azure-vote-front:v1
 ```
 - Apply the changes into AKS k8s cluster.
 
@@ -435,13 +435,13 @@ docker-compose up --build -d
 
 
 ```
-docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr.azurecr.io/azure-vote-front:v2
+docker tag mcr.microsoft.com/azuredocs/azure-vote-front:v1 cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Push your prepared custom image to your newly created ACR.
 
 ```
-docker push cnlacr.azurecr.io/azure-vote-front:v2
+docker push cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Scale your pods to 3 replicas
@@ -451,7 +451,7 @@ kubectl scale --replicas=3 deployment/azure-vote-front
 ```
 - Set and prepare your deployment to new version 2
 ```
-kubectl set image deployment azure-vote-front azure-vote-front=cnlacr.azurecr.io/azure-vote-front:v2
+kubectl set image deployment azure-vote-front azure-vote-front=cnlacr1.azurecr.io/azure-vote-front:v2
 ```
 
 - Run below command
