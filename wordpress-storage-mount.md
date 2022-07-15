@@ -93,6 +93,7 @@ kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_
 ```
 
 ***************************************************************************************************************************************
+```
 kubectl apply -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/5-full.yaml
 
 kubectl get pods -n twitter -o wide
@@ -103,8 +104,9 @@ kubectl describe pod/webserver -n twitter
 kubectl exec -it pod/webserver bash -n twitter -c web
 
 kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/5-full.yaml
+```
 ***************************************************************************************************************************************
-find out the below yaml file is deployed to which name space
+# find out the below yaml file is deployed to which name space
 
 kubectl apply -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/6-example.yml -n cloudnloud
 
@@ -115,10 +117,12 @@ kubectl get pod/first-pod -n cloudnloud
 kubectl describe pod first-pod -n cloudnloud
 
 kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/6-example.yml -n cloudnloud
+```
 ********************************************************************************************
+```
 kubectl get ns
 
 kubectl delete ns <namespace>
-
+```
 
 
