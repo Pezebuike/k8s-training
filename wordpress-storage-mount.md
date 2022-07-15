@@ -74,6 +74,7 @@ kubectl delete -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_
 
 ****************************************************************************************************************************************
 # multi storage
+kubectl create ns facebook
 kubectl apply -f https://raw.githubusercontent.com/cloudnloud/Kubernetes_Admin_Training/main/class4-namespace-Pod/pod/4-multistorage.yml
 
 kubectl get pods -n facebook -o wide
