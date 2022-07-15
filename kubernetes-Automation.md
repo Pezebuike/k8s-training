@@ -84,7 +84,8 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 ## Step 2.3 - Now that we have Docker repository enabled, we can install the latest version of Docker CE (Community Edition) using yum by typing:
 
 ```
-yum install docker-ce -y
+yum install docker-ce --allowerasing -y
+
 
 ```
 
