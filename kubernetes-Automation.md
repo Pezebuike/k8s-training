@@ -490,15 +490,14 @@ done
 
 ```
 
-## go to virtual machine scale sets....
+- go to virtual machine scale sets....
 
-## you will see 2 nodes .After navigating to the pane of the scale set, go to the Instances view, select the instance you want to shut down, and then hit the Stop button
+- you will see 2 nodes .After navigating to the pane of the scale set, go to the Instances view, select the instance you want to shut down, and then hit the Stop button
 
 
+- access http://20.102.24.82/ and keep submit the entries..Keep watch the **watch -n 1 kubectl get all -n k8sdemo -o wide** command output
 
-## access http://20.102.24.82/ and keep submit the entries..Keep watch the **watch -n 1 kubectl get all -n k8sdemo -o wide** command output
-
-## What you see here is the following:
+- **What you see here is the following:**
 -  The Redis master pod running on node 2 got terminated as the host became unhealthy.
 - A new Redis master pod got created, on host 0. This went through the stages **Pending, ContainerCreating, and then Running**.
 
@@ -525,8 +524,7 @@ done
 
 - kubectl scale deployment/redis-replica --replicas=10 -n k8sdemo
 
-
-## Step 13.5: This will cause a couple of new pods to be created. We can check our pods  using the following:
+- **Step 13.5:** This will cause a couple of new pods to be created. We can check our pods  using the following:
 - now many are shown in pending state.This occurs if the cluster is out of resources.
 
 ## Step 13.6: We can get more information about these pending pods using the following command:
